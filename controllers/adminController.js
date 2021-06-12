@@ -4,7 +4,7 @@ module.exports = {
     async getUsers(req, res) {
 
         try{
-            const allUsers = await User.find().select('name');
+            const allUsers = await User.find().select('name isAdmin');
           return res.status(200).json({
             "success": true,
             "users": [
@@ -22,7 +22,7 @@ module.exports = {
 
         const idSelected = req.params.id;
         try{
-            const userSelected = await User.findById(idSelected).select('name');
+            const userSelected = await User.findById(idSelected).select('name isAdmin');
           return res.status(200).json({
             "success": true,
             "user":

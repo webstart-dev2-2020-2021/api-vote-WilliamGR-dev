@@ -8,6 +8,9 @@ const dotenv = require('dotenv').config()
 
 const authRouter = require('./routers/authRouter').router
 const adminRouter = require('./routers/adminRouter').router
+const voteRouter = require('./routers/voteRouter').router
+const adminMid = require('./middlewares/adminMid')
+const userMid = require('./middlewares/userMid')
 
 const api = express()
 api.use(express.json())
@@ -24,7 +27,8 @@ const db = mongoose.connection
 db.on('error', console.error.bind(console, 'ERROR: CANNOT CONNECT TO MONGO-DB'))
 db.once('open', () => console.log('CONNECTED TO MONGO-DB'))
 
-api.use('/admin/', adminRouter)
-api.use('/auth/', authRouter)
+app.use('/admin/', adminMid, adminRouter)
+app.use('/vote/', userMid, voteRouter)
+app.use('/auth/', authRouter)
 
 api.listen(3000, () => console.log('server lancé sur le port 3000'))
